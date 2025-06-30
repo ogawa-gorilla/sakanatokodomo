@@ -1,103 +1,121 @@
-import Image from "next/image";
+'use client'
+
+import { useRouter } from 'next/navigation'
+import { Button, Card, Col, Container, Row } from 'react-bootstrap'
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    const router = useRouter()
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+    const handleNavigateToEvents = () => {
+        router.push('/events')
+    }
+
+    return (
+        <Container className="py-5 mt-5">
+            {/* ヒーローセクション */}
+            <Row className="mb-5">
+                <Col className="text-center">
+                    <h1 className="display-4 mb-3">魚と子どものネットワーク</h1>
+                    <p className="lead text-muted mb-4">
+                        地域のボランティア活動を通じて、より良い社会づくりに貢献しましょう
+                    </p>
+                    <Button
+                        variant="primary"
+                        size="lg"
+                        onClick={handleNavigateToEvents}
+                        className="px-4"
+                    >
+                        イベント一覧を見る
+                    </Button>
+                </Col>
+            </Row>
+
+            {/* 統計情報 */}
+            <Row className="mb-5">
+                <Col md={4} className="mb-3">
+                    <Card className="text-center h-100">
+                        <Card.Body>
+                            <h3 className="text-primary mb-2">15</h3>
+                            <p className="text-muted mb-0">今月のイベント数</p>
+                        </Card.Body>
+                    </Card>
+                </Col>
+                <Col md={4} className="mb-3">
+                    <Card className="text-center h-100">
+                        <Card.Body>
+                            <h3 className="text-success mb-2">127</h3>
+                            <p className="text-muted mb-0">
+                                登録ボランティア数
+                            </p>
+                        </Card.Body>
+                    </Card>
+                </Col>
+                <Col md={4} className="mb-3">
+                    <Card className="text-center h-100">
+                        <Card.Body>
+                            <h3 className="text-warning mb-2">89</h3>
+                            <p className="text-muted mb-0">今月の参加者数</p>
+                        </Card.Body>
+                    </Card>
+                </Col>
+            </Row>
+
+            {/* 最近のイベント */}
+            <Row>
+                <Col>
+                    <h2 className="mb-4">最近のイベント</h2>
+                    <Row>
+                        <Col md={6} className="mb-3">
+                            <Card>
+                                <Card.Body>
+                                    <div className="d-flex justify-content-between align-items-start mb-2">
+                                        <h5 className="card-title mb-0">
+                                            地域清掃ボランティア
+                                        </h5>
+                                        <span className="badge bg-success">
+                                            環境
+                                        </span>
+                                    </div>
+                                    <p className="text-muted small mb-2">
+                                        <i className="bi bi-calendar-event me-1"></i>
+                                        2024年1月15日（月）
+                                    </p>
+                                    <p className="card-text">
+                                        地域の公園や道路の清掃活動を行います。環境美化を通じて地域コミュニティの絆を深めましょう。
+                                    </p>
+                                    <Button variant="outline-primary" size="sm">
+                                        詳細を見る
+                                    </Button>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                        <Col md={6} className="mb-3">
+                            <Card>
+                                <Card.Body>
+                                    <div className="d-flex justify-content-between align-items-start mb-2">
+                                        <h5 className="card-title mb-0">
+                                            高齢者見守り活動
+                                        </h5>
+                                        <span className="badge bg-primary">
+                                            福祉
+                                        </span>
+                                    </div>
+                                    <p className="text-muted small mb-2">
+                                        <i className="bi bi-calendar-event me-1"></i>
+                                        2024年1月20日（土）
+                                    </p>
+                                    <p className="card-text">
+                                        地域の高齢者の方々の見守り活動を行います。定期的な訪問や声かけを通じて、安心して暮らせる地域づくりを支援します。
+                                    </p>
+                                    <Button variant="outline-primary" size="sm">
+                                        詳細を見る
+                                    </Button>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                    </Row>
+                </Col>
+            </Row>
+        </Container>
+    )
 }
