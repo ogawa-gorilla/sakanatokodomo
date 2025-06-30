@@ -5,7 +5,7 @@ import dayjs from 'dayjs'
 import ja from 'dayjs/locale/ja'
 import { useParams, useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { Badge, Button, Card, Col, Container, Row } from 'react-bootstrap'
+import { Badge, Button, Card, Col, Container, Form, Row } from 'react-bootstrap'
 import LineTemplateModal from './components/LineTemplateModal'
 import { Event } from './types/Event'
 
@@ -280,12 +280,26 @@ export default function EventDetailPage() {
                     {/* 参加受付 */}
                     <Card className="mb-4">
                         <Card.Body>
-                            <h5 className="card-title">参加受付用QR</h5>
+                            <h5 className="card-title">参加受付情報</h5>
+                            <small className="text-danger">
+                                ※スタッフでログインしているときのみ表示予定
+                            </small>
+                            <p className="mb-2">
+                                <strong>QRコード:</strong>
+                            </p>
                             <div className="d-flex justify-content-center">
                                 <QRCode
                                     url={`${process.env.NEXT_PUBLIC_HOST}events/${event?.id}/participation`}
                                 />
                             </div>
+                            <p className="mb-2">
+                                <strong>URL:</strong>
+                                <Form.Control
+                                    type="text"
+                                    value={`${process.env.NEXT_PUBLIC_HOST}events/${event?.id}/participation`}
+                                    readOnly
+                                />
+                            </p>
                         </Card.Body>
                     </Card>
                 </Col>

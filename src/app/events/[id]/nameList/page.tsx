@@ -2,15 +2,7 @@
 
 import { useParams, useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
-import {
-    Badge,
-    Button,
-    Card,
-    Col,
-    Container,
-    Row,
-    Table,
-} from 'react-bootstrap'
+import { Button, Card, Col, Container, Row, Table } from 'react-bootstrap'
 
 interface Participant {
     id: string
@@ -31,6 +23,8 @@ const NameListPage: React.FC = () => {
     const [participants, setParticipants] = useState<Participant[]>([])
     const [loading, setLoading] = useState(true)
     const router = useRouter()
+
+    const eventName = '[イベント名]'
 
     // モックデータ（実際のAPIから取得する場合はここを変更）
     useEffect(() => {
@@ -94,6 +88,63 @@ const NameListPage: React.FC = () => {
         staff: number
     }) => {
         return people.adults + people.children + people.staff
+    }
+
+    // CSV出力機能
+    const downloadCSV = () => {
+        // CSVヘッダー
+        const headers = [
+            '区分',
+            '名前',
+            '連絡先',
+            'LINE名',
+            '大人',
+            '子供',
+            'スタッフ',
+            '合計人数',
+            '詳細人数',
+        ]
+
+        // CSVデータ行を生成
+        const csvData = participants.map((participant) => [
+            participant.isStaff ? 'スタッフ' : '一般参加者',
+            participant.name,
+            participant.contact,
+            participant.lineName,
+            participant.people.adults.toString(),
+            participant.people.children.toString(),
+            participant.people.staff.toString(),
+            getTotalPeople(participant.people).toString(),
+            renderPeople(participant.people),
+        ])
+
+        // CSVコンテンツを生成
+        const csvContent = [
+            headers.join(','),
+            ...csvData.map((row) => row.map((cell) => `"${cell}"`).join(',')),
+        ].join('\n')
+
+        // BOMを追加して日本語文字化けを防ぐ
+        const bom = '\uFEFF'
+        const blob = new Blob([bom + csvContent], {
+            type: 'text/csv;charset=utf-8;',
+        })
+
+        // ダウンロードリンクを作成
+        const link = document.createElement('a')
+        const url = URL.createObjectURL(blob)
+        link.setAttribute('href', url)
+        link.setAttribute(
+            'download',
+            `参加者名簿_${eventName}_${
+                new Date().toISOString().split('T')[0]
+            }.csv`
+        )
+        link.style.visibility = 'hidden'
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+        URL.revokeObjectURL(url)
     }
 
     const renderParticipantTable = (
@@ -180,7 +231,7 @@ const NameListPage: React.FC = () => {
                         onClick={() => router.push(`/events/${eventId}`)}
                         className="mb-3"
                     >
-                        ← イベントに戻る
+                        ← イベントへ
                     </Button>
                 </Col>
             </Row>
@@ -188,9 +239,17 @@ const NameListPage: React.FC = () => {
                 <Col>
                     <div className="d-flex justify-content-between align-items-center mb-4">
                         <h2 className="mb-0">参加者名簿</h2>
-                        <Badge bg="secondary" className="fs-6">
-                            総参加者: {participants.length}組
-                        </Badge>
+                        <div className="d-flex align-items-center gap-3">
+                            {participants.length > 0 && (
+                                <Button
+                                    variant="outline-primary"
+                                    size="sm"
+                                    onClick={downloadCSV}
+                                >
+                                    📊 CSVで出力
+                                </Button>
+                            )}
+                        </div>
                     </div>
 
                     {/* スタッフ一覧 */}
