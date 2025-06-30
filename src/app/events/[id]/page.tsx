@@ -330,7 +330,15 @@ export default function EventDetailPage() {
                             </div>
 
                             <div className="d-grid gap-2">
-                                <Button variant="primary" size="lg">
+                                <Button
+                                    variant="primary"
+                                    size="lg"
+                                    onClick={() =>
+                                        router.push(
+                                            `/events/${eventId}/participation`
+                                        )
+                                    }
+                                >
                                     参加申し込み
                                 </Button>
                             </div>

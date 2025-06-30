@@ -46,12 +46,6 @@ export default function AppNavbar() {
                         >
                             イベントカレンダー
                         </Nav.Link>
-                        <Nav.Link
-                            href="#"
-                            onClick={() => handleNavLinkClick('/staffs')}
-                        >
-                            スタッフ一覧
-                        </Nav.Link>
                     </Nav>
                     <Nav>
                         <UserDropdown />
