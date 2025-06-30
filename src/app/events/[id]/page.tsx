@@ -1,27 +1,14 @@
 'use client'
 
+import dayjs from 'dayjs'
+import ja from 'dayjs/locale/ja'
 import { useParams, useRouter } from 'next/navigation'
+import { useState } from 'react'
 import { Badge, Button, Card, Col, Container, Row } from 'react-bootstrap'
+import LineTemplateModal from './components/LineTemplateModal'
+import { Event } from './types/Event'
 
 // イベントの型定義
-interface Event {
-    id: string
-    title: string
-    description: string
-    date: string
-    spareDate?: string
-    startTime: string
-    endTime: string
-    staffStartTime: string
-    location: string
-    address: string
-    category: string
-    currentParticipants: number
-    currentStaffs: number
-    organizer: string
-    contactEmail: string
-    requirements: string[]
-}
 
 // サンプルデータ
 const sampleEvents: Event[] = [
@@ -105,10 +92,11 @@ const getCategoryColor = (category: string) => {
 }
 
 export default function EventDetailPage() {
+    dayjs.locale(ja)
     const params = useParams()
     const router = useRouter()
     const eventId = params.id as string
-
+    const [showLineTemplateModal, setShowLineTemplateModal] = useState(false)
     // イベントデータを取得
     const event = sampleEvents.find((e) => e.id === eventId)
 
@@ -132,6 +120,12 @@ export default function EventDetailPage() {
 
     return (
         <Container className="py-4 mt-5">
+            {/* LINEテンプレート用モーダル */}
+            <LineTemplateModal
+                show={showLineTemplateModal}
+                onHide={() => setShowLineTemplateModal(false)}
+                event={event}
+            />
             {/* 戻るボタン */}
             <Row className="mb-4">
                 <Col>
@@ -257,6 +251,9 @@ export default function EventDetailPage() {
                     <Card className="mb-4">
                         <Card.Body>
                             <h5 className="card-title">スタッフメニュー</h5>
+                            <small className="text-danger">
+                                ※スタッフでログインしているときのみ表示予定
+                            </small>
                             <div className="d-grid gap-2">
                                 <Button
                                     variant="outline-secondary"
@@ -267,6 +264,14 @@ export default function EventDetailPage() {
                                     }
                                 >
                                     名簿を閲覧
+                                </Button>
+                                <Button
+                                    variant="outline-secondary"
+                                    onClick={() =>
+                                        setShowLineTemplateModal(true)
+                                    }
+                                >
+                                    LINE用テンプレート
                                 </Button>
                             </div>
                         </Card.Body>
