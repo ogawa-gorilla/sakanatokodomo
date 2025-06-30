@@ -5,11 +5,44 @@ import dayjs from 'dayjs'
 import ja from 'dayjs/locale/ja'
 import { useParams, useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { Badge, Button, Card, Col, Container, Form, Row } from 'react-bootstrap'
+import {
+    Badge,
+    Button,
+    Card,
+    Col,
+    Collapse,
+    Container,
+    Form,
+    Row,
+} from 'react-bootstrap'
 import LineTemplateModal from './components/LineTemplateModal'
 import { Event } from './types/Event'
 
 // イベントの型定義
+
+// 参加者とスタッフのダミーデータ
+const sampleParticipants = [
+    '田中太郎',
+    '佐藤花子',
+    '鈴木一郎',
+    '高橋美咲',
+    '渡辺健太',
+    '伊藤恵子',
+    '山田次郎',
+    '中村由美',
+    '小林正男',
+    '加藤愛',
+    '吉田裕子',
+    '山口達也',
+    '松本真理',
+    '井上雄一',
+    '木村美穂',
+    '林健二',
+    '斎藤恵美',
+    '清水大輔',
+]
+
+const sampleStaffs = ['新玉', '山本', '佐々木']
 
 // サンプルデータ
 const sampleEvents: Event[] = [
@@ -42,7 +75,7 @@ const sampleEvents: Event[] = [
         staffStartTime: '8:00',
         location: '加太地区の田んぼ',
         address: '亀山市加太中在家',
-        category: '福祉',
+        category: '観察会',
         currentParticipants: 12,
         currentStaffs: 2,
         organizer: '新玉',
@@ -60,7 +93,7 @@ const sampleEvents: Event[] = [
         staffStartTime: '9:00',
         location: '服部川',
         address: '伊賀市平田',
-        category: '教育',
+        category: '観察会',
         currentParticipants: 8,
         currentStaffs: 1,
         organizer: '新玉',
@@ -98,6 +131,8 @@ export default function EventDetailPage() {
     const router = useRouter()
     const eventId = params.id as string
     const [showLineTemplateModal, setShowLineTemplateModal] = useState(false)
+    const [showParticipants, setShowParticipants] = useState(false)
+    const [showStaffs, setShowStaffs] = useState(false)
     // イベントデータを取得
     const event = sampleEvents.find((e) => e.id === eventId)
 
@@ -204,23 +239,94 @@ export default function EventDetailPage() {
                             </div>
                         </Card.Body>
                     </Card>
-                </Col>
-
-                <Col lg={4}>
                     {/* 参加情報 */}
                     <Card className="mb-4">
                         <Card.Body>
-                            <h5 className="card-title">参加情報</h5>
+                            <h5 className="card-title">参加者情報</h5>
 
+                            {/* 参加者 */}
                             <div className="mb-3">
-                                <div className="d-flex justify-content-between mb-1">
-                                    <span>参加者数</span>
-                                    <span>{event.currentParticipants}</span>
-                                </div>
-                                <div className="d-flex justify-content-between mb-1">
-                                    <span>スタッフ</span>
-                                    <span>{event.currentStaffs}</span>
-                                </div>
+                                <Button
+                                    variant="outline-primary"
+                                    onClick={() =>
+                                        setShowParticipants(!showParticipants)
+                                    }
+                                    aria-controls="participants-collapse"
+                                    aria-expanded={showParticipants}
+                                    className="w-100 text-start d-flex justify-content-between align-items-center"
+                                >
+                                    <span>
+                                        参加者 ({sampleParticipants.length}名)
+                                    </span>
+                                    <i
+                                        className={`bi ${
+                                            showParticipants
+                                                ? 'bi-chevron-up'
+                                                : 'bi-chevron-down'
+                                        }`}
+                                    ></i>
+                                </Button>
+                                <Collapse in={showParticipants}>
+                                    <div
+                                        id="participants-collapse"
+                                        className="mt-2"
+                                    >
+                                        <div className="border rounded p-3 bg-light">
+                                            <div className="row">
+                                                {sampleParticipants.map(
+                                                    (participant, index) => (
+                                                        <div
+                                                            key={index}
+                                                            className="col-6 col-md-4 mb-1"
+                                                        >
+                                                            {participant}
+                                                        </div>
+                                                    )
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </Collapse>
+                            </div>
+
+                            {/* スタッフ */}
+                            <div className="mb-3">
+                                <Button
+                                    variant="outline-secondary"
+                                    onClick={() => setShowStaffs(!showStaffs)}
+                                    aria-controls="staffs-collapse"
+                                    aria-expanded={showStaffs}
+                                    className="w-100 text-start d-flex justify-content-between align-items-center"
+                                >
+                                    <span>
+                                        スタッフ ({sampleStaffs.length}名)
+                                    </span>
+                                    <i
+                                        className={`bi ${
+                                            showStaffs
+                                                ? 'bi-chevron-up'
+                                                : 'bi-chevron-down'
+                                        }`}
+                                    ></i>
+                                </Button>
+                                <Collapse in={showStaffs}>
+                                    <div id="staffs-collapse" className="mt-2">
+                                        <div className="border rounded p-3 bg-light">
+                                            <div className="row">
+                                                {sampleStaffs.map(
+                                                    (staff, index) => (
+                                                        <div
+                                                            key={index}
+                                                            className="col-6 col-md-4 mb-1"
+                                                        >
+                                                            {staff}
+                                                        </div>
+                                                    )
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </Collapse>
                             </div>
 
                             <div className="d-grid gap-2">
@@ -230,7 +336,9 @@ export default function EventDetailPage() {
                             </div>
                         </Card.Body>
                     </Card>
+                </Col>
 
+                <Col lg={4}>
                     {/* 主催者情報 */}
                     <Card className="mb-4">
                         <Card.Body>
