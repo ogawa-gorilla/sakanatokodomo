@@ -9,8 +9,11 @@ interface Event {
     title: string
     description: string
     date: string
-    time: string
+    startTime: string
+    endTime: string
+    staffStartTime: string
     location: string
+    address: string
     category: string
 }
 
@@ -18,43 +21,42 @@ interface Event {
 const sampleEvents: Event[] = [
     {
         id: '1',
-        title: '地域清掃ボランティア',
+        title: '第２回米洗川いきもの探し',
         description:
-            '地域の公園や道路の清掃活動を行います。環境美化を通じて地域コミュニティの絆を深めましょう。参加者全員で協力して、より美しい街づくりを目指します。',
-        date: '2024-01-15',
-        time: '09:00-12:00',
-        location: '中央公園',
+            '初めて協力するイベントです☆生き物調査・自然観察の運営、子どもたちのサポートよろしくお願いいたします。近鉄名古屋線霞ヶ浦駅から徒歩圏内です。',
+        date: '2025-07-05',
+        startTime: '09:00',
+        endTime: '11:00',
+        staffStartTime: '8:30',
+        location: '米洗川・羽津北小学校',
+        address: '四日市市羽津500',
         category: '環境',
     },
     {
         id: '2',
-        title: '高齢者見守り活動',
+        title: 'かぶとの森テラス 田んぼの自然観察会',
         description:
-            '地域の高齢者の方々の見守り活動を行います。定期的な訪問や声かけを通じて、安心して暮らせる地域づくりを支援します。',
-        date: '2024-01-20',
-        time: '14:00-16:00',
-        location: '地域包括支援センター',
+            'キャンプ場を運営されているかぶとの森テラスさんの田んぼの自然観察会です。「かめやま生物多様性共生区域」にも認定されている田んぼです。生き物調査・自然観察の運営、子どもたちのサポートよろしくお願いいたします。JR亀山駅から送迎も可能です。',
+        date: '2025-07-06',
+        startTime: '09:00',
+        endTime: '12:00',
+        staffStartTime: '8:00',
+        location: '加太地区の田んぼ',
+        address: '亀山市加太中在家',
         category: '福祉',
     },
     {
         id: '3',
-        title: '子ども学習支援',
+        title: '株式会社ミルボン 水辺の自然観察会',
         description:
-            '小学生を対象とした学習支援活動です。宿題のサポートや読書指導を行い、子どもたちの学力向上を支援します。',
-        date: '2024-01-25',
-        time: '16:00-18:00',
-        location: '地域コミュニティセンター',
+            '企業さんとの自然観察会です。生き物調査・自然観察の運営、子どもたちのサポートよろしくお願いいたします。JR亀山駅から送迎も可能です。',
+        date: '2025-07-19',
+        startTime: '09:00',
+        endTime: '13:00',
+        staffStartTime: '9:00',
+        location: '服部川',
+        address: '伊賀市平田',
         category: '教育',
-    },
-    {
-        id: '4',
-        title: '災害ボランティア研修',
-        description:
-            '災害時のボランティア活動に必要な知識と技術を学ぶ研修会です。緊急時の対応方法や安全確保について学習します。',
-        date: '2024-02-01',
-        time: '10:00-15:00',
-        location: '市役所会議室',
-        category: '防災',
     },
 ]
 
@@ -141,7 +143,10 @@ export default function EventsPage() {
 
                                     <div className="d-flex align-items-center mb-2 text-muted small">
                                         <i className="bi bi-clock me-2"></i>
-                                        <span>{event.time}</span>
+                                        <span>
+                                            {event.startTime} - {event.endTime}{' '}
+                                            (スタッフ: {event.staffStartTime})
+                                        </span>
                                     </div>
 
                                     <div className="d-flex align-items-center mb-3 text-muted small">

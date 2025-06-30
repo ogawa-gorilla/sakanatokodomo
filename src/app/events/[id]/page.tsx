@@ -8,13 +8,16 @@ interface Event {
     id: string
     title: string
     description: string
-    fullDescription: string
     date: string
-    time: string
+    spareDate?: string
+    startTime: string
+    endTime: string
+    staffStartTime: string
     location: string
+    address: string
     category: string
-    maxParticipants: number
     currentParticipants: number
+    currentStaffs: number
     organizer: string
     contactEmail: string
     requirements: string[]
@@ -24,79 +27,57 @@ interface Event {
 const sampleEvents: Event[] = [
     {
         id: '1',
-        title: '地域清掃ボランティア',
+        title: '第２回米洗川いきもの探し',
         description:
-            '地域の公園や道路の清掃活動を行います。環境美化を通じて地域コミュニティの絆を深めましょう。参加者全員で協力して、より美しい街づくりを目指します。',
-        fullDescription:
-            '地域の公園や道路の清掃活動を行います。環境美化を通じて地域コミュニティの絆を深めましょう。参加者全員で協力して、より美しい街づくりを目指します。\n\n当日は以下の活動を行います：\n・公園内のゴミ拾い\n・道路沿いの清掃\n・花壇の手入れ\n・落ち葉の掃除\n\n参加者には清掃用具を提供いたします。動きやすい服装でお越しください。',
-        date: '2024-01-15',
-        time: '09:00-12:00',
-        location: '中央公園',
+            '初めて協力するイベントです☆生き物調査・自然観察の運営、子どもたちのサポートよろしくお願いいたします。近鉄名古屋線霞ヶ浦駅から徒歩圏内です。',
+        date: '2025-07-05',
+        startTime: '09:00',
+        endTime: '11:00',
+        staffStartTime: '8:30',
+        location: '米洗川・羽津北小学校',
+        address: '四日市市羽津500',
         category: '環境',
-        maxParticipants: 30,
         currentParticipants: 18,
-        organizer: '地域環境保全会',
+        currentStaffs: 3,
+        organizer: '新玉',
         contactEmail: 'info@environment-volunteer.jp',
         requirements: ['動きやすい服装', '帽子', '水分補給用の飲み物'],
     },
     {
         id: '2',
-        title: '高齢者見守り活動',
+        title: 'かぶとの森テラス 田んぼの自然観察会',
         description:
-            '地域の高齢者の方々の見守り活動を行います。定期的な訪問や声かけを通じて、安心して暮らせる地域づくりを支援します。',
-        fullDescription:
-            '地域の高齢者の方々の見守り活動を行います。定期的な訪問や声かけを通じて、安心して暮らせる地域づくりを支援します。\n\n活動内容：\n・高齢者宅への定期的な訪問\n・健康状態の確認\n・買い物や家事のサポート\n・地域の情報提供\n・緊急時の連絡体制の確認\n\n事前に研修を受けてから活動を開始します。',
-        date: '2024-01-20',
-        time: '14:00-16:00',
-        location: '地域包括支援センター',
+            'キャンプ場を運営されているかぶとの森テラスさんの田んぼの自然観察会です。「かめやま生物多様性共生区域」にも認定されている田んぼです。生き物調査・自然観察の運営、子どもたちのサポートよろしくお願いいたします。JR亀山駅から送迎も可能です。',
+        date: '2025-07-06',
+        startTime: '09:00',
+        endTime: '12:00',
+        staffStartTime: '8:00',
+        location: '加太地区の田んぼ',
+        address: '亀山市加太中在家',
         category: '福祉',
-        maxParticipants: 20,
         currentParticipants: 12,
-        organizer: '地域福祉推進協議会',
+        currentStaffs: 2,
+        organizer: '新玉',
         contactEmail: 'welfare@community-support.jp',
-        requirements: [
-            '事前研修の受講',
-            '身分証明書',
-            'コミュニケーション能力',
-        ],
+        requirements: ['動きやすい服装', '帽子', '水分補給用の飲み物'],
     },
     {
         id: '3',
-        title: '子ども学習支援',
+        title: '株式会社ミルボン 水辺の自然観察会',
         description:
-            '小学生を対象とした学習支援活動です。宿題のサポートや読書指導を行い、子どもたちの学力向上を支援します。',
-        fullDescription:
-            '小学生を対象とした学習支援活動です。宿題のサポートや読書指導を行い、子どもたちの学力向上を支援します。\n\n支援内容：\n・宿題のサポート\n・読書指導\n・算数の基礎学習\n・工作や実験のサポート\n・遊びを通じた学習\n\n教育経験のある方や、子どもが好きな方の参加をお待ちしています。',
+            '企業さんとの自然観察会です。生き物調査・自然観察の運営、子どもたちのサポートよろしくお願いいたします。JR亀山駅から送迎も可能です。',
         date: '2024-01-25',
-        time: '16:00-18:00',
-        location: '地域コミュニティセンター',
+        startTime: '09:00',
+        endTime: '13:00',
+        staffStartTime: '9:00',
+        location: '服部川',
+        address: '伊賀市平田',
         category: '教育',
-        maxParticipants: 15,
         currentParticipants: 8,
-        organizer: '子ども支援ネットワーク',
+        currentStaffs: 1,
+        organizer: '新玉',
         contactEmail: 'education@children-support.jp',
-        requirements: [
-            '子どもが好き',
-            '基本的な学習指導能力',
-            '犯罪経歴証明書',
-        ],
-    },
-    {
-        id: '4',
-        title: '災害ボランティア研修',
-        description:
-            '災害時のボランティア活動に必要な知識と技術を学ぶ研修会です。緊急時の対応方法や安全確保について学習します。',
-        fullDescription:
-            '災害時のボランティア活動に必要な知識と技術を学ぶ研修会です。緊急時の対応方法や安全確保について学習します。\n\n研修内容：\n・災害ボランティアの基礎知識\n・安全確保の方法\n・避難所運営の基礎\n・被災者支援の心得\n・緊急時の連絡体制\n・実技訓練\n\n修了証を発行いたします。',
-        date: '2024-02-01',
-        time: '10:00-15:00',
-        location: '市役所会議室',
-        category: '防災',
-        maxParticipants: 50,
-        currentParticipants: 35,
-        organizer: '市防災ボランティアセンター',
-        contactEmail: 'disaster@city-volunteer.jp',
-        requirements: ['18歳以上', '身分証明書', '筆記用具'],
+        requirements: ['動きやすい服装', '帽子', '水分補給用の飲み物'],
     },
 ]
 
@@ -152,10 +133,6 @@ export default function EventDetailPage() {
         )
     }
 
-    const participationRate = Math.round(
-        (event.currentParticipants / event.maxParticipants) * 100
-    )
-
     return (
         <Container className="py-4 mt-5">
             {/* 戻るボタン */}
@@ -198,7 +175,9 @@ export default function EventDetailPage() {
                                 <Col md={6} className="mb-3">
                                     <div className="d-flex align-items-center text-muted">
                                         <i className="bi bi-clock me-2"></i>
-                                        <span>{event.time}</span>
+                                        <span>
+                                            {event.startTime} - {event.endTime}
+                                        </span>
                                     </div>
                                 </Col>
                                 <Col md={12}>
@@ -213,13 +192,13 @@ export default function EventDetailPage() {
                             <div className="mb-4">
                                 <h4>イベント詳細</h4>
                                 <div style={{ whiteSpace: 'pre-line' }}>
-                                    {event.fullDescription}
+                                    {event.description}
                                 </div>
                             </div>
 
                             {/* 参加要件 */}
                             <div className="mb-4">
-                                <h4>参加要件</h4>
+                                <h4>持ち物</h4>
                                 <ul className="list-unstyled">
                                     {event.requirements.map(
                                         (requirement, index) => (
@@ -244,22 +223,12 @@ export default function EventDetailPage() {
                             <div className="mb-3">
                                 <div className="d-flex justify-content-between mb-1">
                                     <span>参加者数</span>
-                                    <span>
-                                        {event.currentParticipants} /{' '}
-                                        {event.maxParticipants}
-                                    </span>
+                                    <span>{event.currentParticipants}</span>
                                 </div>
-                                <div className="progress mb-2">
-                                    <div
-                                        className="progress-bar"
-                                        style={{
-                                            width: `${participationRate}%`,
-                                        }}
-                                    ></div>
+                                <div className="d-flex justify-content-between mb-1">
+                                    <span>スタッフ</span>
+                                    <span>{event.currentStaffs}</span>
                                 </div>
-                                <small className="text-muted">
-                                    定員の{participationRate}%が埋まっています
-                                </small>
                             </div>
 
                             <div className="d-grid gap-2">
@@ -276,9 +245,9 @@ export default function EventDetailPage() {
                     {/* 主催者情報 */}
                     <Card>
                         <Card.Body>
-                            <h5 className="card-title">主催者情報</h5>
+                            <h5 className="card-title">作成者情報</h5>
                             <p className="mb-2">
-                                <strong>主催:</strong> {event.organizer}
+                                <strong>作成者:</strong> {event.organizer}
                             </p>
                             <p className="mb-3">
                                 <strong>連絡先:</strong>
@@ -287,9 +256,6 @@ export default function EventDetailPage() {
                                     {event.contactEmail}
                                 </a>
                             </p>
-                            <Button variant="outline-primary" size="sm">
-                                主催者に問い合わせ
-                            </Button>
                         </Card.Body>
                     </Card>
                 </Col>
