@@ -4,3 +4,5 @@ globs:
 alwaysApply: true
 ---
 The product is based on next.js + TypeScript. User prefers react-bootstrap rather than div + bootstrap class name style. Note that tailwind css is available.
+
+The layout should be smartphone-friendly.

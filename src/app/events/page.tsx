@@ -3,6 +3,11 @@
 import { useRouter } from 'next/navigation'
 import { Badge, Card, Col, Container, Row } from 'react-bootstrap'
 
+interface Tag {
+    name: string
+    color: string
+}
+
 // イベントの型定義
 interface Event {
     id: string
@@ -14,7 +19,7 @@ interface Event {
     staffStartTime: string
     location: string
     address: string
-    category: string
+    tags: Tag[]
 }
 
 // サンプルデータ
@@ -30,7 +35,7 @@ const sampleEvents: Event[] = [
         staffStartTime: '8:30',
         location: '米洗川・羽津北小学校',
         address: '四日市市羽津500',
-        category: '環境',
+        tags: [{ name: '観察会', color: 'success' }],
     },
     {
         id: '2',
@@ -43,7 +48,7 @@ const sampleEvents: Event[] = [
         staffStartTime: '8:00',
         location: '加太地区の田んぼ',
         address: '亀山市加太中在家',
-        category: '福祉',
+        tags: [{ name: '観察会', color: 'success' }],
     },
     {
         id: '3',
@@ -56,7 +61,7 @@ const sampleEvents: Event[] = [
         staffStartTime: '9:00',
         location: '服部川',
         address: '伊賀市平田',
-        category: '教育',
+        tags: [{ name: '観察会', color: 'success' }],
     },
 ]
 
@@ -75,18 +80,6 @@ const formatDate = (dateString: string) => {
         day: 'numeric',
         weekday: 'short',
     })
-}
-
-// カテゴリに応じた色を返す関数
-const getCategoryColor = (category: string) => {
-    const colors: { [key: string]: string } = {
-        環境: 'success',
-        福祉: 'primary',
-        教育: 'warning',
-        防災: 'danger',
-        その他: 'secondary',
-    }
-    return colors[category] || 'secondary'
 }
 
 export default function EventsPage() {
@@ -117,10 +110,10 @@ export default function EventsPage() {
                                 {/* カテゴリバッジ */}
                                 <div className="mb-2">
                                     <Badge
-                                        bg={getCategoryColor(event.category)}
+                                        bg={event.tags[0].color}
                                         className="mb-2"
                                     >
-                                        {event.category}
+                                        {event.tags[0].name}
                                     </Badge>
                                 </div>
 

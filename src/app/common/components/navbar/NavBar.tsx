@@ -24,15 +24,13 @@ export default function AppNavbar() {
             onToggle={() => setExpanded(!expanded)}
         >
             <Container>
-                <Navbar.Brand href="#">
-                    魚と子どものネットワーク イベント参加名簿管理システム
-                </Navbar.Brand>
+                <Navbar.Brand href="#">魚と子ども 名簿管理</Navbar.Brand>
                 <Navbar.Toggle aria-controls="navbar-main" />
                 <Navbar.Collapse id="navbar-main">
                     <Nav className="me-auto">
                         <Nav.Link
                             href="#"
-                            onClick={() => handleNavLinkClick('/home')}
+                            onClick={() => handleNavLinkClick('/')}
                         >
                             ホーム
                         </Nav.Link>
@@ -44,7 +42,7 @@ export default function AppNavbar() {
                         </Nav.Link>
                         <Nav.Link
                             href="#"
-                            onClick={() => handleNavLinkClick('/events')}
+                            onClick={() => handleNavLinkClick('/eventCalendar')}
                         >
                             イベントカレンダー
                         </Nav.Link>
@@ -60,7 +58,6 @@ export default function AppNavbar() {
                     </Nav>
                 </Navbar.Collapse>
             </Container>
-            )
         </Navbar>
     )
 }

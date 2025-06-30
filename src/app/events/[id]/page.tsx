@@ -121,11 +121,8 @@ export default function EventDetailPage() {
                         <p className="text-muted">
                             指定されたイベントは存在しないか、削除された可能性があります。
                         </p>
-                        <Button
-                            variant="primary"
-                            onClick={() => router.push('/events')}
-                        >
-                            イベント一覧に戻る
+                        <Button variant="primary" onClick={() => router.back()}>
+                            ← 戻る
                         </Button>
                     </Col>
                 </Row>
@@ -140,10 +137,10 @@ export default function EventDetailPage() {
                 <Col>
                     <Button
                         variant="outline-secondary"
-                        onClick={() => router.push('/events')}
+                        onClick={() => router.back()}
                         className="mb-3"
                     >
-                        ← イベント一覧に戻る
+                        ← 戻る
                     </Button>
                 </Col>
             </Row>
@@ -235,15 +232,12 @@ export default function EventDetailPage() {
                                 <Button variant="primary" size="lg">
                                     参加申し込み
                                 </Button>
-                                <Button variant="outline-secondary">
-                                    お気に入りに追加
-                                </Button>
                             </div>
                         </Card.Body>
                     </Card>
 
                     {/* 主催者情報 */}
-                    <Card>
+                    <Card className="mb-4">
                         <Card.Body>
                             <h5 className="card-title">作成者情報</h5>
                             <p className="mb-2">
@@ -256,6 +250,25 @@ export default function EventDetailPage() {
                                     {event.contactEmail}
                                 </a>
                             </p>
+                        </Card.Body>
+                    </Card>
+
+                    {/* スタッフメニュー */}
+                    <Card className="mb-4">
+                        <Card.Body>
+                            <h5 className="card-title">スタッフメニュー</h5>
+                            <div className="d-grid gap-2">
+                                <Button
+                                    variant="outline-secondary"
+                                    onClick={() =>
+                                        router.push(
+                                            `/events/${eventId}/nameList`
+                                        )
+                                    }
+                                >
+                                    名簿を閲覧
+                                </Button>
+                            </div>
                         </Card.Body>
                     </Card>
                 </Col>
