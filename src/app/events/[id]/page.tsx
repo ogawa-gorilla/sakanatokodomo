@@ -1,5 +1,6 @@
 'use client'
 
+import QRCode from '@/app/common/components/QRCode'
 import dayjs from 'dayjs'
 import ja from 'dayjs/locale/ja'
 import { useParams, useRouter } from 'next/navigation'
@@ -273,6 +274,17 @@ export default function EventDetailPage() {
                                 >
                                     LINE用テンプレート
                                 </Button>
+                            </div>
+                        </Card.Body>
+                    </Card>
+                    {/* 参加受付 */}
+                    <Card className="mb-4">
+                        <Card.Body>
+                            <h5 className="card-title">参加受付用QR</h5>
+                            <div className="d-flex justify-content-center">
+                                <QRCode
+                                    url={`${process.env.NEXT_PUBLIC_HOST}events/${event?.id}/participation`}
+                                />
                             </div>
                         </Card.Body>
                     </Card>
