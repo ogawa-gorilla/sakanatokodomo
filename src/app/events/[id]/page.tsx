@@ -204,7 +204,8 @@ export default function EventDetailPage() {
                                     <div className="d-flex align-items-center text-muted">
                                         <i className="bi bi-clock me-2"></i>
                                         <span>
-                                            {event.startTime} - {event.endTime}
+                                            {event.startTime} - {event.endTime}{' '}
+                                            (スタッフ {event.staffStartTime})
                                         </span>
                                     </div>
                                 </Col>

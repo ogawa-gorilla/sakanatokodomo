@@ -72,7 +72,11 @@ export default function Home() {
                                     <p className="card-text">
                                         初めて協力するイベントです☆生き物調査・自然観察の運営、子どもたちのサポートよろしくお願いいたします。近鉄名古屋線霞ヶ浦駅から徒歩圏内です
                                     </p>
-                                    <Button variant="outline-primary" size="sm">
+                                    <Button
+                                        variant="outline-primary"
+                                        size="sm"
+                                        onClick={() => router.push('/events/1')}
+                                    >
                                         詳細を見る
                                     </Button>
                                 </Card.Body>
@@ -86,7 +90,7 @@ export default function Home() {
                                             かぶとの森テラス 田んぼの自然観察会
                                         </h5>
                                         <span className="badge bg-primary">
-                                            福祉
+                                            観察会
                                         </span>
                                     </div>
                                     <p className="text-muted small mb-2">
@@ -96,7 +100,11 @@ export default function Home() {
                                     <p className="card-text">
                                         キャンプ場を運営されているかぶとの森テラスさんの田んぼの自然観察会です。「かめやま生物多様性共生区域」にも認定されている田んぼです。生き物調査・自然観察の運営、子どもたちのサポートよろしくお願いいたします。JR亀山駅から送迎も可能です。
                                     </p>
-                                    <Button variant="outline-primary" size="sm">
+                                    <Button
+                                        variant="outline-primary"
+                                        size="sm"
+                                        onClick={() => router.push('/events/2')}
+                                    >
                                         詳細を見る
                                     </Button>
                                 </Card.Body>
