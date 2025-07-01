@@ -99,10 +99,7 @@ export default function EventsPage() {
             {/* ページヘッダー */}
             <Row className="mb-4">
                 <Col>
-                    <h1 className="h2 mb-3">ボランティアイベント一覧</h1>
-                    <p className="text-muted">
-                        地域のボランティア活動に参加して、より良い社会づくりに貢献しましょう
-                    </p>
+                    <h1 className="h2 mb-3">イベント一覧</h1>
                 </Col>
             </Row>
 
