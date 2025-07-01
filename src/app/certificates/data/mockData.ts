@@ -4,6 +4,7 @@ export const mockCertificateRequests: CertificateRequest[] = [
     {
         id: '1',
         name: '田中太郎',
+        address: '三重県四日市市○○町1-2-3',
         eventName: '第２回米洗川いきもの探し',
         location: '米洗川・羽津北小学校',
         eventDate: '2025-07-05',
@@ -14,6 +15,7 @@ export const mockCertificateRequests: CertificateRequest[] = [
     {
         id: '2',
         name: '佐藤花子',
+        address: '三重県四日市市○○町1-2-3',
         eventName: 'かぶとの森テラス 田んぼの自然観察会',
         location: '亀山・かぶとの森テラス',
         eventDate: '2025-07-06',
@@ -24,6 +26,7 @@ export const mockCertificateRequests: CertificateRequest[] = [
     {
         id: '3',
         name: '鈴木一郎',
+        address: '三重県四日市市○○町1-2-3',
         eventName: '第２回米洗川いきもの探し',
         location: '米洗川・羽津北小学校',
         eventDate: '2025-07-05',
@@ -34,6 +37,7 @@ export const mockCertificateRequests: CertificateRequest[] = [
     {
         id: '4',
         name: '高橋美咲',
+        address: '三重県四日市市○○町1-2-3',
         eventName: '第２回米洗川いきもの探し',
         location: '米洗川・羽津北小学校',
         eventDate: '2025-07-05',
@@ -44,6 +48,7 @@ export const mockCertificateRequests: CertificateRequest[] = [
     {
         id: '5',
         name: '伊藤健太',
+        address: '三重県四日市市○○町1-2-3',
         eventName: 'かぶとの森テラス 田んぼの自然観察会',
         location: '亀山・かぶとの森テラス',
         eventDate: '2025-07-06',
@@ -54,6 +59,7 @@ export const mockCertificateRequests: CertificateRequest[] = [
     {
         id: '6',
         name: '渡辺愛',
+        address: '三重県四日市市○○町1-2-3',
         eventName: '第２回米洗川いきもの探し',
         location: '米洗川・羽津北小学校',
         eventDate: '2025-07-05',
@@ -64,6 +70,7 @@ export const mockCertificateRequests: CertificateRequest[] = [
     {
         id: '7',
         name: '山田次郎',
+        address: '三重県四日市市○○町1-2-3',
         eventName: '第２回米洗川いきもの探し',
         location: '米洗川・羽津北小学校',
         eventDate: '2025-07-05',
@@ -74,6 +81,7 @@ export const mockCertificateRequests: CertificateRequest[] = [
     {
         id: '8',
         name: '中村由美',
+        address: '三重県四日市市○○町1-2-3',
         eventName: 'かぶとの森テラス 田んぼの自然観察会',
         location: '亀山・かぶとの森テラス',
         eventDate: '2025-07-06',
@@ -84,6 +92,7 @@ export const mockCertificateRequests: CertificateRequest[] = [
     {
         id: '9',
         name: '小林正男',
+        address: '三重県四日市市○○町1-2-3',
         eventName: '第２回米洗川いきもの探し',
         location: '米洗川・羽津北小学校',
         eventDate: '2025-07-05',
@@ -94,6 +103,7 @@ export const mockCertificateRequests: CertificateRequest[] = [
     {
         id: '10',
         name: '加藤恵子',
+        address: '三重県四日市市○○町1-2-3',
         eventName: '第２回米洗川いきもの探し',
         location: '米洗川・羽津北小学校',
         eventDate: '2025-07-05',
@@ -104,6 +114,7 @@ export const mockCertificateRequests: CertificateRequest[] = [
     {
         id: '11',
         name: '斎藤大輔',
+        address: '三重県四日市市○○町1-2-3',
         eventName: 'かぶとの森テラス 田んぼの自然観察会',
         location: '亀山・かぶとの森テラス',
         eventDate: '2025-07-06',
@@ -114,6 +125,7 @@ export const mockCertificateRequests: CertificateRequest[] = [
     {
         id: '12',
         name: '松本真理',
+        address: '三重県四日市市○○町1-2-3',
         eventName: '第２回米洗川いきもの探し',
         location: '米洗川・羽津北小学校',
         eventDate: '2025-07-05',

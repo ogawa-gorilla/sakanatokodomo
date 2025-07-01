@@ -15,7 +15,8 @@ interface ParticipationForm {
     notes: string
     volunteerCertificate: boolean
     phone: string
-    companions: string[] // 同行者の名前の配列を追加
+    address: string // 参加者本人の住所を追加
+    companions: { name: string; address: string }[] // 同行者の氏名と住所の組の配列に変更
 }
 
 // Cookie管理のユーティリティ関数
@@ -110,6 +111,7 @@ export default function ParticipationPage() {
         notes: '',
         volunteerCertificate: false,
         phone: '',
+        address: '', // 参加者本人の住所を初期化
         companions: [], // 同行者の配列を初期化
     })
 
@@ -178,6 +180,11 @@ export default function ParticipationPage() {
         setFormData((prev) => ({ ...prev, phone: value }))
     }
 
+    // 参加者本人の住所変更を処理
+    const handleAddressChange = (value: string) => {
+        setFormData((prev) => ({ ...prev, address: value }))
+    }
+
     // 参加種別の変更を処理
     const handleParticipationTypeChange = (value: string) => {
         if (value === 'general' || value === 'staff') {
@@ -204,7 +211,7 @@ export default function ParticipationPage() {
         if (formData.companions.length < 4) {
             setFormData((prev) => ({
                 ...prev,
-                companions: [...prev.companions, ''],
+                companions: [...prev.companions, { name: '', address: '' }],
             }))
         }
     }
@@ -222,7 +229,17 @@ export default function ParticipationPage() {
         setFormData((prev) => ({
             ...prev,
             companions: prev.companions.map((companion, i) =>
-                i === index ? value : companion
+                i === index ? { ...companion, name: value } : companion
+            ),
+        }))
+    }
+
+    // 同行者の住所変更
+    const handleCompanionAddressChange = (index: number, value: string) => {
+        setFormData((prev) => ({
+            ...prev,
+            companions: prev.companions.map((companion, i) =>
+                i === index ? { ...companion, address: value } : companion
             ),
         }))
     }
@@ -576,12 +593,37 @@ export default function ParticipationPage() {
                                             </small>
                                             <div className="mt-2">
                                                 <small className="text-muted">
-                                                    同行者も証明書が必要な場合は、下記の同行者欄に名前を入力してください。
+                                                    同行者も証明書が必要な場合は、下記の同行者欄に名前と住所を入力してください。
                                                 </small>
                                             </div>
                                         </div>
                                     )}
                                 </Form.Group>
+
+                                {/* 参加者本人の住所（証明書が必要な場合） */}
+                                {formData.volunteerCertificate && (
+                                    <Form.Group className="mb-4">
+                                        <Form.Label>
+                                            住所{' '}
+                                            <span className="text-danger">
+                                                *
+                                            </span>
+                                        </Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            value={formData.address}
+                                            onChange={(e) =>
+                                                handleAddressChange(
+                                                    e.target.value
+                                                )
+                                            }
+                                            placeholder="例: 三重県四日市市○○町1-2-3"
+                                        />
+                                        <Form.Text className="text-muted">
+                                            証明書の郵送に使用します。
+                                        </Form.Text>
+                                    </Form.Group>
+                                )}
 
                                 {/* 同行者の追加 */}
                                 {formData.volunteerCertificate && (
@@ -594,32 +636,81 @@ export default function ParticipationPage() {
                                                 (companion, index) => (
                                                     <div
                                                         key={index}
-                                                        className="d-flex align-items-center mb-2"
+                                                        className="mb-3 p-3 border rounded"
                                                     >
-                                                        <Form.Control
-                                                            type="text"
-                                                            value={companion}
-                                                            onChange={(e) =>
-                                                                handleCompanionChange(
-                                                                    index,
-                                                                    e.target
-                                                                        .value
-                                                                )
-                                                            }
-                                                            placeholder="同行者の名前"
-                                                            className="me-2"
-                                                        />
-                                                        <Button
-                                                            variant="outline-danger"
-                                                            size="sm"
-                                                            onClick={() =>
-                                                                handleRemoveCompanion(
-                                                                    index
-                                                                )
-                                                            }
-                                                        >
-                                                            削除
-                                                        </Button>
+                                                        <div className="d-flex align-items-center mb-2">
+                                                            <h6 className="mb-0 me-2">
+                                                                同行者
+                                                                {index + 1}
+                                                            </h6>
+                                                            <Button
+                                                                variant="outline-danger"
+                                                                size="sm"
+                                                                onClick={() =>
+                                                                    handleRemoveCompanion(
+                                                                        index
+                                                                    )
+                                                                }
+                                                            >
+                                                                削除
+                                                            </Button>
+                                                        </div>
+                                                        <Row>
+                                                            <Col md={6}>
+                                                                <Form.Group className="mb-2">
+                                                                    <Form.Label>
+                                                                        氏名{' '}
+                                                                        <span className="text-danger">
+                                                                            *
+                                                                        </span>
+                                                                    </Form.Label>
+                                                                    <Form.Control
+                                                                        type="text"
+                                                                        value={
+                                                                            companion.name
+                                                                        }
+                                                                        onChange={(
+                                                                            e
+                                                                        ) =>
+                                                                            handleCompanionChange(
+                                                                                index,
+                                                                                e
+                                                                                    .target
+                                                                                    .value
+                                                                            )
+                                                                        }
+                                                                        placeholder="同行者の氏名"
+                                                                    />
+                                                                </Form.Group>
+                                                            </Col>
+                                                            <Col md={6}>
+                                                                <Form.Group className="mb-2">
+                                                                    <Form.Label>
+                                                                        住所{' '}
+                                                                        <span className="text-danger">
+                                                                            *
+                                                                        </span>
+                                                                    </Form.Label>
+                                                                    <Form.Control
+                                                                        type="text"
+                                                                        value={
+                                                                            companion.address
+                                                                        }
+                                                                        onChange={(
+                                                                            e
+                                                                        ) =>
+                                                                            handleCompanionAddressChange(
+                                                                                index,
+                                                                                e
+                                                                                    .target
+                                                                                    .value
+                                                                            )
+                                                                        }
+                                                                        placeholder="例: 三重県四日市市○○町1-2-3"
+                                                                    />
+                                                                </Form.Group>
+                                                            </Col>
+                                                        </Row>
                                                     </div>
                                                 )
                                             )}
@@ -635,7 +726,7 @@ export default function ParticipationPage() {
                                             )}
                                             <div className="mt-2">
                                                 <small className="text-muted">
-                                                    同行者は最大4名まで追加できます。
+                                                    同行者は最大4名まで追加できます。氏名と住所の両方を入力してください。
                                                 </small>
                                             </div>
                                         </div>

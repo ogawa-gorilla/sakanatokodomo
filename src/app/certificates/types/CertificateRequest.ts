@@ -1,6 +1,7 @@
 export interface CertificateRequest {
     id: string
     name: string
+    address: string
     eventName: string
     location: string
     eventDate: string

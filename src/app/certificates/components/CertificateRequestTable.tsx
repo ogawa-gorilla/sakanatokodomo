@@ -80,6 +80,7 @@ const CertificateRequestTable: React.FC<CertificateRequestTableProps> = ({
                 <thead>
                     <tr>
                         <th>氏名</th>
+                        <th>住所</th>
                         <th>イベント名</th>
                         <th>開催場所</th>
                         <th>開催日時</th>
@@ -91,6 +92,7 @@ const CertificateRequestTable: React.FC<CertificateRequestTableProps> = ({
                     {currentRequests.map((request) => (
                         <tr key={request.id}>
                             <td>{request.name}</td>
+                            <td>{request.address}</td>
                             <td>{request.eventName}</td>
                             <td>{request.location}</td>
                             <td>
@@ -110,6 +112,14 @@ const CertificateRequestTable: React.FC<CertificateRequestTableProps> = ({
                                     >
                                         <i className="bi bi-file-earmark-excel me-1"></i>
                                         xlsx
+                                    </Button>
+                                    <Button
+                                        size="sm"
+                                        variant="outline-success"
+                                        onClick={() => {}}
+                                    >
+                                        <i className="bi bi-printer me-1"></i>
+                                        宛名印刷
                                     </Button>
                                     {request.status === 'pending' && (
                                         <Button
