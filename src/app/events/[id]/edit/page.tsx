@@ -1,5 +1,6 @@
 'use client'
 
+import LocationPicker from '@/app/common/components/LocationPicker'
 import { useParams, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import {
@@ -14,6 +15,13 @@ import {
 } from 'react-bootstrap'
 import { Event } from '../types/Event'
 
+interface Location {
+    address: string
+    location: string
+    lat?: number
+    lng?: number
+}
+
 // サンプルデータ（実際のAPIから取得する想定）
 const sampleEvents: Event[] = [
     {
@@ -27,6 +35,8 @@ const sampleEvents: Event[] = [
         staffStartTime: '8:30',
         location: '米洗川・羽津北小学校',
         address: '四日市市羽津500',
+        lat: 34.9667,
+        lng: 136.6167,
         category: '環境',
         currentParticipants: 18,
         currentStaffs: 3,
@@ -45,6 +55,8 @@ const sampleEvents: Event[] = [
         staffStartTime: '8:00',
         location: '加太地区の田んぼ',
         address: '亀山市加太中在家',
+        lat: 34.85,
+        lng: 136.45,
         category: '観察会',
         currentParticipants: 12,
         currentStaffs: 2,
@@ -85,6 +97,12 @@ export default function EditEventPage() {
         requirements: [''],
     })
 
+    // 場所情報の状態
+    const [location, setLocation] = useState<Location>({
+        address: '',
+        location: '',
+    })
+
     // カテゴリの選択肢
     const categories = ['環境', '福祉', '教育', '防災', '観察会', 'その他']
 
@@ -110,6 +128,8 @@ export default function EditEventPage() {
                     staffStartTime: foundEvent.staffStartTime,
                     location: foundEvent.location,
                     address: foundEvent.address,
+                    lat: foundEvent.lat,
+                    lng: foundEvent.lng,
                     category: foundEvent.category,
                     organizer: foundEvent.organizer,
                     contactEmail: foundEvent.contactEmail,
@@ -117,6 +137,14 @@ export default function EditEventPage() {
                         foundEvent.requirements.length > 0
                             ? foundEvent.requirements
                             : [''],
+                })
+
+                // 場所情報も設定
+                setLocation({
+                    address: foundEvent.address,
+                    location: foundEvent.location,
+                    lat: foundEvent.lat,
+                    lng: foundEvent.lng,
                 })
             } catch (error) {
                 setAlertMessage(
@@ -139,6 +167,18 @@ export default function EditEventPage() {
         setFormData((prev) => ({
             ...prev,
             [field]: value,
+        }))
+    }
+
+    // 場所情報の変更を処理
+    const handleLocationChange = (newLocation: Location) => {
+        setLocation(newLocation)
+        setFormData((prev) => ({
+            ...prev,
+            location: newLocation.location,
+            address: newLocation.address,
+            lat: newLocation.lat,
+            lng: newLocation.lng,
         }))
     }
 
@@ -452,37 +492,11 @@ export default function EditEventPage() {
                                 {/* 場所情報 */}
                                 <h4 className="mb-3 mt-4">場所情報</h4>
 
-                                <Form.Group className="mb-3">
-                                    <Form.Label>場所名 *</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        value={formData.location || ''}
-                                        onChange={(e) =>
-                                            handleInputChange(
-                                                'location',
-                                                e.target.value
-                                            )
-                                        }
-                                        placeholder="例: 米洗川・羽津北小学校"
-                                        required
-                                    />
-                                </Form.Group>
-
-                                <Form.Group className="mb-3">
-                                    <Form.Label>住所 *</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        value={formData.address || ''}
-                                        onChange={(e) =>
-                                            handleInputChange(
-                                                'address',
-                                                e.target.value
-                                            )
-                                        }
-                                        placeholder="例: 四日市市羽津500"
-                                        required
-                                    />
-                                </Form.Group>
+                                <LocationPicker
+                                    value={location}
+                                    onChange={handleLocationChange}
+                                    className="mb-3"
+                                />
 
                                 {/* 主催者情報 */}
                                 <h4 className="mb-3 mt-4">主催者情報</h4>

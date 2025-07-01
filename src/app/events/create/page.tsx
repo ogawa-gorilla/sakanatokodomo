@@ -1,9 +1,17 @@
 'use client'
 
+import LocationPicker from '@/app/common/components/LocationPicker'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { Alert, Button, Card, Col, Container, Form, Row } from 'react-bootstrap'
 import { Event } from '../[id]/types/Event'
+
+interface Location {
+    address: string
+    location: string
+    lat?: number
+    lng?: number
+}
 
 export default function CreateEventPage() {
     const router = useRouter()
@@ -31,6 +39,12 @@ export default function CreateEventPage() {
         requirements: [''],
     })
 
+    // 場所情報の状態
+    const [location, setLocation] = useState<Location>({
+        address: '',
+        location: '',
+    })
+
     // カテゴリの選択肢
     const categories = ['環境', '福祉', '教育', '防災', '観察会', 'その他']
 
@@ -39,6 +53,18 @@ export default function CreateEventPage() {
         setFormData((prev) => ({
             ...prev,
             [field]: value,
+        }))
+    }
+
+    // 場所情報の変更を処理
+    const handleLocationChange = (newLocation: Location) => {
+        setLocation(newLocation)
+        setFormData((prev) => ({
+            ...prev,
+            location: newLocation.location,
+            address: newLocation.address,
+            lat: newLocation.lat,
+            lng: newLocation.lng,
         }))
     }
 
@@ -317,37 +343,11 @@ export default function CreateEventPage() {
                                 {/* 場所情報 */}
                                 <h4 className="mb-3 mt-4">場所情報</h4>
 
-                                <Form.Group className="mb-3">
-                                    <Form.Label>場所名 *</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        value={formData.location || ''}
-                                        onChange={(e) =>
-                                            handleInputChange(
-                                                'location',
-                                                e.target.value
-                                            )
-                                        }
-                                        placeholder="例: 米洗川・羽津北小学校"
-                                        required
-                                    />
-                                </Form.Group>
-
-                                <Form.Group className="mb-3">
-                                    <Form.Label>住所 *</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        value={formData.address || ''}
-                                        onChange={(e) =>
-                                            handleInputChange(
-                                                'address',
-                                                e.target.value
-                                            )
-                                        }
-                                        placeholder="例: 四日市市羽津500"
-                                        required
-                                    />
-                                </Form.Group>
+                                <LocationPicker
+                                    value={location}
+                                    onChange={handleLocationChange}
+                                    className="mb-3"
+                                />
 
                                 {/* 主催者情報 */}
                                 <h4 className="mb-3 mt-4">主催者情報</h4>

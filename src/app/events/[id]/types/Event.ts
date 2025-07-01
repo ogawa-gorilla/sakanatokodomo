@@ -9,6 +9,8 @@ export interface Event {
     staffStartTime: string
     location: string
     address: string
+    lat?: number
+    lng?: number
     category: string
     currentParticipants: number
     currentStaffs: number
