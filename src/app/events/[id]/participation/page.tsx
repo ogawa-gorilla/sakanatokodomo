@@ -8,11 +8,13 @@ import { Event } from '../types/Event'
 // 参加申請の型定義
 interface ParticipationForm {
     name: string
+    email: string
     participationType: 'general' | 'staff'
     adults: number
     children: number
     notes: string
     volunteerCertificate: boolean
+    phone: string
 }
 
 // Cookie管理のユーティリティ関数
@@ -100,20 +102,24 @@ export default function ParticipationPage() {
     // フォームの状態管理
     const [formData, setFormData] = useState<ParticipationForm>({
         name: '',
+        email: '',
         participationType: 'general',
         adults: 1,
         children: 0,
         notes: '',
         volunteerCertificate: false,
+        phone: '',
     })
 
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [submitSuccess, setSubmitSuccess] = useState(false)
     const [errors, setErrors] = useState<{
         name?: string
+        email?: string
         adults?: string
         children?: string
         notes?: string
+        phone?: string
     }>({})
 
     // コンポーネントマウント時にCookieから前回の入力内容を読み込み
@@ -141,6 +147,13 @@ export default function ParticipationPage() {
         }
     }
 
+    const handleEmailChange = (value: string) => {
+        setFormData((prev) => ({ ...prev, email: value }))
+        if (errors.email) {
+            setErrors((prev) => ({ ...prev, email: undefined }))
+        }
+    }
+
     const handleAdultsChange = (value: number) => {
         setFormData((prev) => ({ ...prev, adults: value }))
         if (errors.adults) {
@@ -157,6 +170,10 @@ export default function ParticipationPage() {
 
     const handleNotesChange = (value: string) => {
         setFormData((prev) => ({ ...prev, notes: value }))
+    }
+
+    const handlePhoneChange = (value: string) => {
+        setFormData((prev) => ({ ...prev, phone: value }))
     }
 
     // 参加種別の変更を処理
@@ -184,9 +201,11 @@ export default function ParticipationPage() {
     const validateForm = (): boolean => {
         const newErrors: {
             name?: string
+            email?: string
             adults?: string
             children?: string
             notes?: string
+            phone?: string
         } = {}
 
         if (!formData.name.trim()) {
@@ -225,6 +244,8 @@ export default function ParticipationPage() {
 
             // Cookieに名前と参加種別を保存
             setCookie('participation_name', formData.name)
+            setCookie('participation_email', formData.email)
+            setCookie('participation_phone', formData.phone)
             setCookie('participation_type', formData.participationType)
 
             // 送信成功
@@ -337,6 +358,46 @@ export default function ParticipationPage() {
                                             handleNameChange(e.target.value)
                                         }
                                         placeholder="例: 田中太郎"
+                                        isInvalid={!!errors.name}
+                                    />
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.name}
+                                    </Form.Control.Feedback>
+                                </Form.Group>
+
+                                {/* メールアドレス */}
+                                <Form.Group className="mb-3">
+                                    <Form.Label>
+                                        メールアドレス{' '}
+                                        <span className="text-danger">*</span>
+                                    </Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        value={formData.email}
+                                        onChange={(e) =>
+                                            handleEmailChange(e.target.value)
+                                        }
+                                        placeholder="例: example@example.com"
+                                        isInvalid={!!errors.name}
+                                    />
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.name}
+                                    </Form.Control.Feedback>
+                                </Form.Group>
+
+                                {/* 電話番号 */}
+                                <Form.Group className="mb-3">
+                                    <Form.Label>
+                                        電話番号{' '}
+                                        <span className="text-danger">*</span>
+                                    </Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        value={formData.phone}
+                                        onChange={(e) =>
+                                            handlePhoneChange(e.target.value)
+                                        }
+                                        placeholder="例: 090-1234-5678"
                                         isInvalid={!!errors.name}
                                     />
                                     <Form.Control.Feedback type="invalid">

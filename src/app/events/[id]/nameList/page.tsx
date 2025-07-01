@@ -7,14 +7,14 @@ import { Button, Card, Col, Container, Row, Table } from 'react-bootstrap'
 interface Participant {
     id: string
     name: string
-    contact: string
-    lineName: string
+    email: string
+    phone: string
     people: {
         adults: number
         children: number
-        staff: number
     }
     isStaff: boolean
+    notes: string
 }
 
 const NameListPage: React.FC = () => {
@@ -32,34 +32,38 @@ const NameListPage: React.FC = () => {
             {
                 id: '1',
                 name: '田中太郎',
-                contact: '090-1234-5678',
-                lineName: 'たなか',
-                people: { adults: 2, children: 0, staff: 0 },
+                email: 'tanaka@example.com',
+                phone: '090-1234-5678',
+                people: { adults: 2, children: 0 },
                 isStaff: true,
+                notes: 'ボランティア参加証明書希望',
             },
             {
                 id: '2',
                 name: '佐藤花子',
-                contact: '080-9876-5432',
-                lineName: 'はなこ',
-                people: { adults: 3, children: 1, staff: 0 },
+                email: 'sato@example.com',
+                phone: '080-9876-5432',
+                people: { adults: 3, children: 1 },
                 isStaff: false,
+                notes: 'なし',
             },
             {
                 id: '3',
                 name: '鈴木一郎',
-                contact: '070-5555-1234',
-                lineName: 'いちろう',
-                people: { adults: 1, children: 0, staff: 0 },
+                email: 'suzuki@example.com',
+                phone: '070-5555-1234',
+                people: { adults: 1, children: 0 },
                 isStaff: true,
+                notes: 'なし',
             },
             {
                 id: '4',
                 name: '高橋美咲',
-                contact: '090-7777-8888',
-                lineName: 'みさき',
-                people: { adults: 2, children: 2, staff: 0 },
+                email: 'takahashi@example.com',
+                phone: '090-7777-8888',
+                people: { adults: 2, children: 2 },
                 isStaff: false,
+                notes: 'ライフジャケット希望',
             },
         ]
 
@@ -70,24 +74,15 @@ const NameListPage: React.FC = () => {
     const staffMembers = participants.filter((p) => p.isStaff)
     const regularParticipants = participants.filter((p) => !p.isStaff)
 
-    const renderPeople = (people: {
-        adults: number
-        children: number
-        staff: number
-    }) => {
+    const renderPeople = (people: { adults: number; children: number }) => {
         const parts = []
         if (people.adults > 0) parts.push(`大人${people.adults}名`)
         if (people.children > 0) parts.push(`子供${people.children}名`)
-        if (people.staff > 0) parts.push(`スタッフ${people.staff}名`)
         return parts.length > 0 ? parts.join(', ') : '1名'
     }
 
-    const getTotalPeople = (people: {
-        adults: number
-        children: number
-        staff: number
-    }) => {
-        return people.adults + people.children + people.staff
+    const getTotalPeople = (people: { adults: number; children: number }) => {
+        return people.adults + people.children
     }
 
     // CSV出力機能
@@ -96,26 +91,26 @@ const NameListPage: React.FC = () => {
         const headers = [
             '区分',
             '名前',
-            '連絡先',
-            'LINE名',
+            'メールアドレス',
+            '電話番号',
             '大人',
             '子供',
-            'スタッフ',
             '合計人数',
             '詳細人数',
+            '備考',
         ]
 
         // CSVデータ行を生成
         const csvData = participants.map((participant) => [
             participant.isStaff ? 'スタッフ' : '一般参加者',
             participant.name,
-            participant.contact,
-            participant.lineName,
+            participant.email,
+            participant.phone,
             participant.people.adults.toString(),
             participant.people.children.toString(),
-            participant.people.staff.toString(),
             getTotalPeople(participant.people).toString(),
             renderPeople(participant.people),
+            participant.notes,
         ])
 
         // CSVコンテンツを生成
@@ -162,9 +157,10 @@ const NameListPage: React.FC = () => {
                         <thead className="table-light">
                             <tr>
                                 <th className="border-0">名前</th>
-                                <th className="border-0">連絡先</th>
-                                <th className="border-0">LINE名</th>
+                                <th className="border-0">メールアドレス</th>
+                                <th className="border-0">電話番号</th>
                                 <th className="border-0">人数</th>
+                                <th className="border-0">備考</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -179,11 +175,11 @@ const NameListPage: React.FC = () => {
                                     </td>
                                     <td className="border-0">
                                         <small className="text-muted">
-                                            {participant.contact}
+                                            {participant.email}
                                         </small>
                                     </td>
                                     <td className="border-0">
-                                        <small>{participant.lineName}</small>
+                                        <small>{participant.phone}</small>
                                     </td>
                                     <td className="border-0">
                                         <div className="d-flex flex-column">
@@ -199,6 +195,11 @@ const NameListPage: React.FC = () => {
                                                 )}
                                             </small>
                                         </div>
+                                    </td>
+                                    <td className="border-0">
+                                        <small className="text-muted">
+                                            {participant.notes}
+                                        </small>
                                     </td>
                                 </tr>
                             ))}
