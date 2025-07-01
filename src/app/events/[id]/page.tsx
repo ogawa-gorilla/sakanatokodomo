@@ -1,5 +1,6 @@
 'use client'
 
+import GoogleMap from '@/app/common/components/GoogleMap'
 import QRCode from '@/app/common/components/QRCode'
 import dayjs from 'dayjs'
 import ja from 'dayjs/locale/ja'
@@ -237,6 +238,23 @@ export default function EventDetailPage() {
                                     )}
                                 </ul>
                             </div>
+
+                            {/* Googleマップ */}
+                            <div className="mb-4">
+                                <GoogleMap
+                                    address={event.address}
+                                    location={event.location}
+                                />
+                            </div>
+                            <a
+                                href={`https://www.google.com/maps/search/?api=1&query=${event.location} ${event.address}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <Button variant="outline-secondary">
+                                    Google Mapで開く
+                                </Button>
+                            </a>
                         </Card.Body>
                     </Card>
                     {/* 参加情報 */}
