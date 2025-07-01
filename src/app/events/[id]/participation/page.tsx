@@ -12,6 +12,7 @@ interface ParticipationForm {
     adults: number
     children: number
     notes: string
+    volunteerCertificate: boolean
 }
 
 // Cookie管理のユーティリティ関数
@@ -103,6 +104,7 @@ export default function ParticipationPage() {
         adults: 1,
         children: 0,
         notes: '',
+        volunteerCertificate: false,
     })
 
     const [isSubmitting, setIsSubmitting] = useState(false)
@@ -163,8 +165,19 @@ export default function ParticipationPage() {
             setFormData((prev) => ({
                 ...prev,
                 participationType: value as 'general' | 'staff',
+                // 一般参加に変更した場合はボランティア証明書を無効化
+                volunteerCertificate:
+                    value === 'staff' ? prev.volunteerCertificate : false,
             }))
         }
+    }
+
+    // ボランティア証明書の変更を処理
+    const handleVolunteerCertificateChange = (checked: boolean) => {
+        setFormData((prev) => ({
+            ...prev,
+            volunteerCertificate: checked,
+        }))
     }
 
     // バリデーション
@@ -380,7 +393,7 @@ export default function ParticipationPage() {
                                     <Col md={6}>
                                         <Form.Group>
                                             <Form.Label>
-                                                大人{' '}
+                                                大人 (中学生以上){' '}
                                                 <span className="text-danger">
                                                     *
                                                 </span>
@@ -405,7 +418,9 @@ export default function ParticipationPage() {
                                     </Col>
                                     <Col md={6}>
                                         <Form.Group>
-                                            <Form.Label>子供</Form.Label>
+                                            <Form.Label>
+                                                子供 (小学生未満)
+                                            </Form.Label>
                                             <Form.Control
                                                 type="number"
                                                 min="0"
@@ -438,6 +453,38 @@ export default function ParticipationPage() {
                                         }
                                         placeholder="アレルギー、特別な配慮が必要な場合などがあればご記入ください"
                                     />
+                                </Form.Group>
+
+                                {/* ボランティア証明書 */}
+                                <Form.Group className="mb-4">
+                                    <Form.Check
+                                        type="checkbox"
+                                        id="volunteer-certificate"
+                                        label="ボランティア証明書を希望する"
+                                        checked={formData.volunteerCertificate}
+                                        onChange={(e) =>
+                                            handleVolunteerCertificateChange(
+                                                e.target.checked
+                                            )
+                                        }
+                                        disabled={
+                                            formData.participationType !==
+                                            'staff'
+                                        }
+                                        className={
+                                            formData.participationType !==
+                                            'staff'
+                                                ? 'text-muted'
+                                                : ''
+                                        }
+                                    />
+                                    {formData.volunteerCertificate && (
+                                        <div className="mt-2 p-3 bg-light rounded">
+                                            <small className="text-muted">
+                                                就職活動や単位認定などでご利用いただける、ボランティア活動に参加した証明書（参加証）の発行を申請します。
+                                            </small>
+                                        </div>
+                                    )}
                                 </Form.Group>
 
                                 {/* 送信ボタン */}
