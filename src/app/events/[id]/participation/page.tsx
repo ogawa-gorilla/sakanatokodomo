@@ -15,6 +15,7 @@ interface ParticipationForm {
     notes: string
     volunteerCertificate: boolean
     phone: string
+    companions: string[] // 同行者の名前の配列を追加
 }
 
 // Cookie管理のユーティリティ関数
@@ -109,6 +110,7 @@ export default function ParticipationPage() {
         notes: '',
         volunteerCertificate: false,
         phone: '',
+        companions: [], // 同行者の配列を初期化
     })
 
     const [isSubmitting, setIsSubmitting] = useState(false)
@@ -194,6 +196,34 @@ export default function ParticipationPage() {
         setFormData((prev) => ({
             ...prev,
             volunteerCertificate: checked,
+        }))
+    }
+
+    // 同行者の追加
+    const handleAddCompanion = () => {
+        if (formData.companions.length < 4) {
+            setFormData((prev) => ({
+                ...prev,
+                companions: [...prev.companions, ''],
+            }))
+        }
+    }
+
+    // 同行者の削除
+    const handleRemoveCompanion = (index: number) => {
+        setFormData((prev) => ({
+            ...prev,
+            companions: prev.companions.filter((_, i) => i !== index),
+        }))
+    }
+
+    // 同行者の名前変更
+    const handleCompanionChange = (index: number, value: string) => {
+        setFormData((prev) => ({
+            ...prev,
+            companions: prev.companions.map((companion, i) =>
+                i === index ? value : companion
+            ),
         }))
     }
 
@@ -521,7 +551,7 @@ export default function ParticipationPage() {
                                     <Form.Check
                                         type="checkbox"
                                         id="volunteer-certificate"
-                                        label="ボランティア証明書を希望する"
+                                        label="ボランティア証明書を希望する(スタッフ参加が必要です)"
                                         checked={formData.volunteerCertificate}
                                         onChange={(e) =>
                                             handleVolunteerCertificateChange(
@@ -544,9 +574,73 @@ export default function ParticipationPage() {
                                             <small className="text-muted">
                                                 就職活動や単位認定などでご利用いただける、ボランティア活動に参加した証明書（参加証）の発行を申請します。
                                             </small>
+                                            <div className="mt-2">
+                                                <small className="text-muted">
+                                                    同行者も証明書が必要な場合は、下記の同行者欄に名前を入力してください。
+                                                </small>
+                                            </div>
                                         </div>
                                     )}
                                 </Form.Group>
+
+                                {/* 同行者の追加 */}
+                                {formData.volunteerCertificate && (
+                                    <Form.Group className="mb-4">
+                                        <Form.Label>
+                                            同行者（証明書が必要な場合）
+                                        </Form.Label>
+                                        <div>
+                                            {formData.companions.map(
+                                                (companion, index) => (
+                                                    <div
+                                                        key={index}
+                                                        className="d-flex align-items-center mb-2"
+                                                    >
+                                                        <Form.Control
+                                                            type="text"
+                                                            value={companion}
+                                                            onChange={(e) =>
+                                                                handleCompanionChange(
+                                                                    index,
+                                                                    e.target
+                                                                        .value
+                                                                )
+                                                            }
+                                                            placeholder="同行者の名前"
+                                                            className="me-2"
+                                                        />
+                                                        <Button
+                                                            variant="outline-danger"
+                                                            size="sm"
+                                                            onClick={() =>
+                                                                handleRemoveCompanion(
+                                                                    index
+                                                                )
+                                                            }
+                                                        >
+                                                            削除
+                                                        </Button>
+                                                    </div>
+                                                )
+                                            )}
+                                            {formData.companions.length < 4 && (
+                                                <Button
+                                                    variant="outline-primary"
+                                                    size="sm"
+                                                    onClick={handleAddCompanion}
+                                                    className="mt-2"
+                                                >
+                                                    同行者を追加
+                                                </Button>
+                                            )}
+                                            <div className="mt-2">
+                                                <small className="text-muted">
+                                                    同行者は最大4名まで追加できます。
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </Form.Group>
+                                )}
 
                                 {/* 送信ボタン */}
                                 <div className="d-grid">
