@@ -1,3 +1,4 @@
+'use client'
 import jwt from 'jsonwebtoken'
 import { useSearchParams } from 'next/navigation'
 
