@@ -46,6 +46,12 @@ export default function AppNavbar() {
                         >
                             イベントカレンダー
                         </Nav.Link>
+                        <Nav.Link
+                            href="#"
+                            onClick={() => handleNavLinkClick('/certificates')}
+                        >
+                            証明書申請一覧
+                        </Nav.Link>
                     </Nav>
                     <Nav>
                         <UserDropdown />
