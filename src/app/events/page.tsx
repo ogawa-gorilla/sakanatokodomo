@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { Badge, Card, Col, Container, Row } from 'react-bootstrap'
+import { Badge, Button, Card, Col, Container, Row } from 'react-bootstrap'
 
 interface Tag {
     name: string
@@ -95,6 +95,14 @@ export default function EventsPage() {
             <Row className="mb-4">
                 <Col>
                     <h1 className="h2 mb-3">イベント一覧</h1>
+                </Col>
+                <Col xs="auto">
+                    <Button
+                        variant="primary"
+                        onClick={() => router.push('/events/create')}
+                    >
+                        + 新規イベント作成
+                    </Button>
                 </Col>
             </Row>
 

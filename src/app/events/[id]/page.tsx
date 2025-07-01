@@ -391,6 +391,14 @@ export default function EventDetailPage() {
                             </small>
                             <div className="d-grid gap-2">
                                 <Button
+                                    variant="outline-primary"
+                                    onClick={() =>
+                                        router.push(`/events/${eventId}/edit`)
+                                    }
+                                >
+                                    イベントを編集
+                                </Button>
+                                <Button
                                     variant="outline-secondary"
                                     onClick={() =>
                                         router.push(
